@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fun.sast.word.mapper.SentenceMapper">
+
+
+    <select id="getSentenceByUId" resultType="fun.sast.word.pojo.vo.SentenceVO">
+        select s.content, s.is_euphemism, s.created_time
+        from sentence s
+        where s.u_id = #{user_id}
+    </select>
+
+    <select id="getAllSentences" resultType="fun.sast.word.pojo.vo.SentenceVO">
+        select s.content, s.is_euphemism, s.created_time
+        from sentence s
+    </select>
+</mapper>
+
