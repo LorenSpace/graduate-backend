@@ -1,0 +1,16 @@
+syntax = "proto3";
+option java_package = "fun.sast.word.grpc";
+
+
+service EuphemismService {
+  // 检验句子是否存在委婉语
+  rpc DetectEuphemism(DetectEuphemismRequest) returns (DetectEuphemismResponse) {}
+}
+
+message DetectEuphemismRequest {
+  string text = 1;
+}
+
+message DetectEuphemismResponse {
+  bool result = 1;
+}

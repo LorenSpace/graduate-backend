@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * @author cxy621
  * @since 2024-04-27 23:54:53
  */
-@Service("userService")
+@Service("UserService")
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 

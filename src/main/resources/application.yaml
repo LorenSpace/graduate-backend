@@ -17,3 +17,11 @@ mybatis-plus:
     map-underscore-to-camel-case: true
   type-aliases-package: fun.sast.word.entity
   mapper-locations: classpath*:/mapper/*.xml
+
+grpc:
+  server:
+    port: 9090
+
+euphemism:
+  host: localhost
+  port: 50051

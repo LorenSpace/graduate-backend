@@ -12,6 +12,7 @@
     <select id="getAllSentences" resultType="fun.sast.word.pojo.vo.SentenceVO">
         select s.content, s.is_euphemism, s.created_time
         from sentence s
+        order by s.id desc
     </select>
 </mapper>
 

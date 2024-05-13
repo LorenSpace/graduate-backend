@@ -6,6 +6,7 @@ import fun.sast.word.common.enums.ErrorEnum;
 import fun.sast.word.entity.Sentence;
 import fun.sast.word.entity.User;
 import fun.sast.word.exception.LocalRunTimeException;
+import fun.sast.word.grpc.EuphemismClient;
 import fun.sast.word.mapper.SentenceMapper;
 import fun.sast.word.mapper.UserMapper;
 import fun.sast.word.pojo.vo.SentenceVO;
@@ -23,13 +24,16 @@ import java.util.List;
  */
 @Service("sentenceService")
 public class SentenceServiceImpl implements SentenceService {
+    private final EuphemismClient euphemismClient;
+
     private final UserMapper userMapper;
 
     private final SentenceMapper sentenceMapper;
 
-    public SentenceServiceImpl(SentenceMapper sentenceMapper, UserMapper userMapper) {
-        this.sentenceMapper = sentenceMapper;
+    public SentenceServiceImpl(UserMapper userMapper, SentenceMapper sentenceMapper, EuphemismClient euphemismClient) {
         this.userMapper = userMapper;
+        this.sentenceMapper = sentenceMapper;
+        this.euphemismClient = euphemismClient;
     }
 
     @Override
@@ -38,7 +42,12 @@ public class SentenceServiceImpl implements SentenceService {
             throw new LocalRunTimeException(ErrorEnum.USER_NOT_EXISTS);
         }
         sentence.setUId(user_id);
-        sentence.setIsEuphemism(2);
+        boolean result = euphemismClient.isEuphemism(sentence.getContent());
+        if (result) {
+            sentence.setIsEuphemism(1);
+        } else {
+            sentence.setIsEuphemism(0);
+        }
         sentence.setCreatedTime(LocalDateTime.now());
         sentenceMapper.insert(sentence);
         return sentence.getId();
